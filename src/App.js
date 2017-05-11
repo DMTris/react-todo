@@ -23,16 +23,21 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      todos
+      todos,
+      error: null
     };
   }
 
   createTask(task){
-    this.state.todos.push({
-      task,
-      isComplete: false
-    });
-    this.setState({todos: this.state.todos});
+    if (!task) {
+      return alert(`Cannot create an empty task.`);
+    } else {
+      this.state.todos.push({
+        task,
+        isComplete: false
+      });
+      this.setState({todos: this.state.todos});
+    }
   }
 
   toggleTask(task){
@@ -60,7 +65,7 @@ export default class App extends Component {
     return(
       <div>
         <h1>React To Do App</h1>
-        <CreateToDo createTask={this.createTask.bind(this)} />
+        <CreateToDo todos={this.state.todos} createTask={this.createTask.bind(this)} />
         <ToDoList
           todos={this.state.todos}
           toggleTask={this.toggleTask.bind(this)}
